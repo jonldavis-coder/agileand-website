@@ -21,12 +21,17 @@
     if(menu&&menu.classList.contains('open')){closeMore();more.focus();return;}
     if(links&&links.classList.contains('open')){links.classList.remove('open');toggle.setAttribute('aria-expanded','false');toggle.setAttribute('aria-label','Open menu');toggle.focus();}
   });
-  var y=document.getElementById('year'); if(y) y.textContent=new Date().getFullYear();
-  var els=document.querySelectorAll('.reveal');
-  if('IntersectionObserver' in window){
-    var io=new IntersectionObserver(function(en){en.forEach(function(x){if(x.isIntersecting){x.target.classList.add('in');io.unobserve(x.target);}});},{threshold:.12});
-    els.forEach(function(el){io.observe(el);});
-  } else { els.forEach(function(el){el.classList.add('in');}); }
+  // Year and scroll reveals are not needed for first paint.
+  function afterLoad(){
+    var y=document.getElementById('year'); if(y) y.textContent=new Date().getFullYear();
+    var els=document.querySelectorAll('.reveal');
+    if('IntersectionObserver' in window){
+      var io=new IntersectionObserver(function(en){en.forEach(function(x){if(x.isIntersecting){x.target.classList.add('in');io.unobserve(x.target);}});},{threshold:.12});
+      els.forEach(function(el){io.observe(el);});
+    } else { els.forEach(function(el){el.classList.add('in');}); }
+  }
+  if(document.readyState==='complete') afterLoad();
+  else window.addEventListener('load', afterLoad);
   // Email addresses are assembled at runtime so they never appear in the HTML source
   function addr(el){return (el.getAttribute('data-user')||'')+'\u0040'+(el.getAttribute('data-domain')||'');}
   var EMAIL=['info','agileand.com'].join('\u0040');
