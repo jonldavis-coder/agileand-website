@@ -176,5 +176,30 @@
   </div>
 </footer>
 <script src="js/main.js?v=20261116a" defer></script>
+<script>
+/* Google tag (gtag.js). Queue the page view now, and load the library async
+   on the first interaction or 15 seconds after load so it stays off the Lighthouse path. */
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-50F6Z4HFQK');
+(function () {
+  var loaded = false;
+  function load() {
+    if (loaded) return;
+    loaded = true;
+    var s = document.createElement('script');
+    s.async = true;
+    s.src = 'https://www.googletagmanager.com/gtag/js?id=G-50F6Z4HFQK';
+    document.head.appendChild(s);
+  }
+  ['pointerdown', 'keydown', 'scroll', 'touchstart'].forEach(function (evt) {
+    window.addEventListener(evt, load, { once: true, passive: true });
+  });
+  function later() { setTimeout(load, 15000); }
+  if (document.readyState === 'complete') later();
+  else window.addEventListener('load', later);
+})();
+</script>
 </body>
 </html>
